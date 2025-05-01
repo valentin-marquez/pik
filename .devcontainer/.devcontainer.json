@@ -1,0 +1,58 @@
+{
+    "name": "Rust + Node.js Development Environment",
+    "image": "mcr.microsoft.com/devcontainers/universal:linux",
+    "features": {
+        "ghcr.io/devcontainers/features/rust:1": {
+            "version": "latest",
+            "profile": "default"
+        },
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "lts"
+        },
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/github-cli:1": {
+            "version": "latest"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "tamasfe.even-better-toml",
+                "serayuzgur.crates",
+                "vadimcn.vscode-lldb",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "bradlc.vscode-tailwindcss",
+                "GitHub.copilot",
+                "ms-vscode.vscode-typescript-next"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "editor.formatOnSave": true,
+                "files.exclude": {
+                    "**/target": true,
+                    "**/node_modules": true
+                }
+            }
+        }
+    },
+    "postCreateCommand": "cd core && rustup target add wasm32-unknown-unknown && cargo install wasm-pack && cd ../web && npm install",
+    "forwardPorts": [
+        3000
+    ],
+    "portsAttributes": {
+        "3000": {
+            "label": "Web Application",
+            "onAutoForward": "openPreview"
+        }
+    },
+    "remoteUser": "codespace",
+    "hostRequirements": {
+        "cpus": 4,
+        "memory": "8gb",
+        "storage": "32gb"
+    }
+}
